@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Repositories\TaskRepository;
 use App\Services\Providers\TaskProviderFactory;
 use App\Services\TaskService;
 use Illuminate\Console\Command;
@@ -30,7 +31,7 @@ class TaskCreate extends Command
      */
     public function handle()
     {
-        $taskService = new TaskService();
+        $taskService = new TaskService(new TaskRepository());
 
         foreach ($this->providers as $provider) {
             $provider = TaskProviderFactory::createProvider($provider);

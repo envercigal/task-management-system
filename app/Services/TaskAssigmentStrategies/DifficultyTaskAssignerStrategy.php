@@ -4,7 +4,7 @@ namespace App\Services\TaskAssigmentStrategies;
 
 use App\Dtos\DeveloperDto;
 
-class DifficultyTaskAssignerStrategy implements TaskAssignerInterface
+class DifficultyTaskAssignerStrategy implements TaskAssignerStrategy
 {
     public function assignTasks(array $tasks, array $developers, int $workHourPerWeek): array
     {

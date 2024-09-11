@@ -5,15 +5,18 @@ namespace App\Services;
 
 use App\Dtos\DeveloperDto;
 use App\Dtos\TaskDto;
-use App\Models\Task;
-use App\Services\TaskAssigmentStrategies\TaskAssignerInterface;
+use App\Repositories\TaskRepositoryInterface;
+use App\Services\TaskAssigmentStrategies\TaskAssigner;
 use Illuminate\Support\Collection;
 
 class TaskService {
     private Collection $tasks;
 
-    public function __construct() {
+    private TaskRepositoryInterface $taskRepository;
+
+    public function __construct(TaskRepositoryInterface $taskRepository) {
         $this->tasks = collect();
+        $this->taskRepository = $taskRepository;
     }
 
     public function addTasks(Collection $tasks): self
@@ -36,15 +39,14 @@ class TaskService {
             return;
         }
 
-        Task::upsert(
-            $this->tasks->map(fn(TaskDto $taskDto) => $taskDto->toArray())->toArray(),
-            ['id'] // Assuming the 'id' is the unique key for the upsert
+        $this->taskRepository->upsert(
+            $this->tasks->map(fn(TaskDto $taskDto) => $taskDto->toArray())->toArray()
         );
     }
 
-    public function assignTasks (TaskAssignerInterface $taskAssigner): array
+    public function assignTasks (TaskAssigner $taskAssigner): array
     {
-        $tasks = Task::all();
+        $tasks = $this->taskRepository->all();
         $developers = $this->getDevelopers();
         return $taskAssigner->assignTasks($tasks->toArray(), $developers ,45);
     }

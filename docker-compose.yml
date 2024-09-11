@@ -13,7 +13,7 @@ services:
             - .:/var/www/html
         depends_on:
             - db
-        entrypoint: sh -c "sleep 25 && php /var/www/html/artisan key:generate && php /var/www/html/artisan migrate --force && php /var/www/html/artisan app:task-create && apache2-foreground"
+        entrypoint: sh -c "sleep 10 && composer install --no-interaction --optimize-autoloader --no-dev && php /var/www/html/artisan key:generate && php /var/www/html/artisan migrate --force && php /var/www/html/artisan app:task-create && apache2-foreground"
 
 
     db:
@@ -29,7 +29,7 @@ services:
         ports:
             - "3306:3306"
         volumes:
-            - mydatabase:/var/lib/mysql
+            - test:/var/lib/mysql
         healthcheck:
             test: ["CMD", "mysqladmin", "ping", "--silent"]
             interval: 10s
@@ -38,4 +38,4 @@ services:
             timeout: 10s
 
 volumes:
-    mydatabase:
+    test:
