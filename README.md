@@ -39,9 +39,10 @@
 
 2. Docker konteynerlerini başlatın:
    ```bash
-   docker-compose up
+   docker-compose up (Key generate kolay test icin her seferinde oluşacak şekilde eklendi.)
    ```
 
 ### Notlar
+- Mock data test amaçlı çok fazla eklenmiştir.
 - Manuel kurulum yapıyorsanız `.env` dosyasındaki veritabanı bilgilerini manuel olarak doldurmayı unutmayın.
 - Docker kullanıyorsanız `.env` dosyasındaki veritabanı ayarlarını docker'a göre yapılandırın. (.env.example bu bilgiyi içerir)
