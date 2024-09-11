@@ -3,7 +3,7 @@
 namespace App\Adapters;
 
 use App\Dtos\TaskDto;
-use App\Services\TaskProvider;
+use App\Services\Providers\TaskProvider;
 use Illuminate\Support\Collection;
 
 class Task1ProviderProviderAdapter implements TaskProviderAdapter{

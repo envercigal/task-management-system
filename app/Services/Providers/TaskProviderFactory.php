@@ -1,11 +1,10 @@
 <?php
 
-nameSpace App\Services;
+nameSpace App\Services\Providers;
 
 use App\Adapters\Task1ProviderProviderAdapter;
 use App\Adapters\Task2ProviderProviderAdapter;
 use App\Adapters\TaskProviderAdapter;
-use function PHPUnit\Framework\matches;
 
 class TaskProviderFactory
 {

@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Services\TaskProviderFactory;
+use App\Services\Providers\TaskProviderFactory;
 use App\Services\TaskService;
 use Illuminate\Console\Command;
-use NunoMaduro\Collision\Provider;
 
 class TaskCreate extends Command
 {
