@@ -1,5 +1,8 @@
 <?php
+
 namespace App\Services\Providers;
-interface TaskProvider {
+
+interface TaskProvider
+{
     public function execute();
 }

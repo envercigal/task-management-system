@@ -49,13 +49,13 @@ class DifficultyTaskAssignerStrategy implements TaskAssignerStrategy
         return $this->groupByWeek($works);
     }
 
-
     public function getWorkHourPerWeek(array $developers): int
     {
         return count($developers) * 45;
     }
 
-    public function orderDeveloperByCapacity(array $tasks): array{
+    public function orderDeveloperByCapacity(array $tasks): array
+    {
         usort($tasks, function ($a, $b) {
             return $b->capacityPerHour - $a->capacityPerHour;
         });
@@ -70,9 +70,11 @@ class DifficultyTaskAssignerStrategy implements TaskAssignerStrategy
         }, 0);
     }
 
-    public function groupByWeek(array $tasks): array{
-       return array_reduce($tasks, function ($result, $item) {
+    public function groupByWeek(array $tasks): array
+    {
+        return array_reduce($tasks, function ($result, $item) {
             $result[$item['week_number']][] = $item;
+
             return $result;
         }, []);
     }

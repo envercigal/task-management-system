@@ -2,10 +2,12 @@
 
 namespace App\Services\TaskAssigmentStrategies;
 
-class TaskAssigner {
+class TaskAssigner
+{
     private TaskAssignerStrategy $taskAssigner;
 
-    public function __construct(TaskAssignerStrategy $taskAssigner) {
+    public function __construct(TaskAssignerStrategy $taskAssigner)
+    {
         $this->taskAssigner = $taskAssigner;
     }
 

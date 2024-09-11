@@ -5,8 +5,11 @@ namespace App\Dtos;
 class TaskDto
 {
     private int $value;
+
     private int $estimatedDuration;
+
     private string $provider;
+
     private int $providerId;
 
     public function __construct(int $value, int $estimatedDuration, string $provider, int $providerId)
@@ -37,7 +40,6 @@ class TaskDto
         return $this->providerId;
     }
 
-
     public function setValue(int $value)
     {
         $this->value = $value;
@@ -57,7 +59,6 @@ class TaskDto
     {
         $this->providerId = $providerId;
     }
-
 
     // Convert the object to an array
     public function toArray(): array

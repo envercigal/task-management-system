@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Services\Providers;
+
 use Illuminate\Support\Facades\Http;
 
-class TaskProvider2 implements TaskProvider {
-    public function execute() {
+class TaskProvider2 implements TaskProvider
+{
+    public function execute()
+    {
         $this->fakeRequest();
         $response = Http::get('https://enuygun.com/mock2');
         if ($response->successful()) {
@@ -14,12 +17,13 @@ class TaskProvider2 implements TaskProvider {
         return [];
     }
 
-    public function fakeRequest(): void {
+    public function fakeRequest(): void
+    {
 
         $mockArray = include base_path('resources/mocks/provider2.php');
 
         Http::fake([
-            'enuygun.com/mock2' => Http::response($mockArray)
+            'enuygun.com/mock2' => Http::response($mockArray),
         ]);
     }
 }

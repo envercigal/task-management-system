@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services;
 
 use App\Dtos\DeveloperDto;
@@ -9,12 +8,14 @@ use App\Repositories\TaskRepositoryInterface;
 use App\Services\TaskAssigmentStrategies\TaskAssigner;
 use Illuminate\Support\Collection;
 
-class TaskService {
+class TaskService
+{
     private Collection $tasks;
 
     private TaskRepositoryInterface $taskRepository;
 
-    public function __construct(TaskRepositoryInterface $taskRepository) {
+    public function __construct(TaskRepositoryInterface $taskRepository)
+    {
         $this->tasks = collect();
         $this->taskRepository = $taskRepository;
     }
@@ -27,36 +28,35 @@ class TaskService {
             return $this;
         }
 
-
         $this->tasks = $this->tasks->merge($tasks);
 
         return $this;
     }
 
-    public function save():void
+    public function save(): void
     {
         if ($this->tasks->isEmpty()) {
             return;
         }
 
         $this->taskRepository->upsert(
-            $this->tasks->map(fn(TaskDto $taskDto) => $taskDto->toArray())->toArray()
+            $this->tasks->map(fn (TaskDto $taskDto) => $taskDto->toArray())->toArray()
         );
     }
 
-    public function assignTasks (TaskAssigner $taskAssigner): array
+    public function assignTasks(TaskAssigner $taskAssigner): array
     {
         $tasks = $this->taskRepository->all();
         $developers = $this->getDevelopers();
-        return $taskAssigner->assignTasks($tasks->toArray(), $developers ,45);
-    }
 
+        return $taskAssigner->assignTasks($tasks->toArray(), $developers, 45);
+    }
 
     /* Mock developer data*/
 
     private function getDevelopers(): array
     {
-       return [
+        return [
             new DeveloperDto('DEV1', 1),
             new DeveloperDto('DEV2', 2),
             new DeveloperDto('DEV3', 3),

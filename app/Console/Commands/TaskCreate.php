@@ -9,8 +9,8 @@ use Illuminate\Console\Command;
 
 class TaskCreate extends Command
 {
+    private $providers = ['Task1Provider', 'Task2Provider'];
 
-    private $providers = ['Task1Provider','Task2Provider'];
     /**
      * The name and signature of the console command.
      *
@@ -27,11 +27,12 @@ class TaskCreate extends Command
 
     /**
      * Execute the console command.
+     *
      * @throws \Exception
      */
     public function handle()
     {
-        $taskService = new TaskService(new TaskRepository());
+        $taskService = new TaskService(new TaskRepository);
 
         foreach ($this->providers as $provider) {
             $provider = TaskProviderFactory::createProvider($provider);

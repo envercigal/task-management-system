@@ -4,6 +4,7 @@ namespace App\Adapters;
 
 use Illuminate\Support\Collection;
 
-interface TaskProviderAdapter {
+interface TaskProviderAdapter
+{
     public function getTasks(): Collection;
 }
