@@ -1,34 +1,41 @@
 version: '3.8'
+
 services:
-    app:
+    web:
         build:
             context: .
-            dockerfile: Dockerfile
-        container_name: laravel-app
+            target: web
+        env_file:
+            - .env
         ports:
-            - "8000:80"
+            - "8080:80"  # Apache'nin 80 portunu 8080 portuna yönlendirin
         volumes:
             - .:/var/www/html
-        environment:
-            - APACHE_RUN_USER=www-data
-            - APACHE_RUN_GROUP=www-data
         depends_on:
             - db
+        entrypoint: sh -c "sleep 25 && php /var/www/html/artisan key:generate && php /var/www/html/artisan migrate --force && php /var/www/html/artisan app:task-create && apache2-foreground"
+
 
     db:
-        image: mysql:8.0
-        container_name: laravel-db
-        restart: unless-stopped
+        image: mysql:5.7
+        platform: "linux/amd64"
+        env_file:
+            - .env
         environment:
-            MYSQL_DATABASE: laravel
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: laravel
+            MYSQL_DATABASE: task-management
+            MYSQL_USER: user
             MYSQL_PASSWORD: secret
-        volumes:
-            - data:/var/lib/mysql
         ports:
             - "3306:3306"
+        volumes:
+            - mydatabase:/var/lib/mysql
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "--silent"]
+            interval: 10s
+            retries: 5
+            start_period: 30s
+            timeout: 10s
 
 volumes:
-    data:
-        driver: local
+    mydatabase:
